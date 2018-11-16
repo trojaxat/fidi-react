@@ -2,3 +2,13 @@
     overflow-y: scroll;
     z-index: 1;
 }
+
+.btn {
+    display: contents;
+    position: fixed;
+    z-index: 2;
+}
+
+.btn:hover {
+    color:darkseagreen;
+}

@@ -51,10 +51,24 @@ class App extends Component {
     }
     
    onButtonSubmit = () => {
+       // check while logged in and add photo to icons 
         this.setState({imageUrl: this.state.input});
-        this.state.user.entries.push(this.state.input);
-        return this.state.user.entries;
-        } 
+        this.state.user.entries.push(this.state.input)
+        fetch('http://localhost:3000/addImage', {
+            method: 'post',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                link : this.state.user.entries[0],
+                email: this.state.user.email,
+                place: "hello"
+            })
+        })
+        .then(picture => {
+            console.log("Photo added successfully");
+        }).catch(err => {
+            console.log('Photo not added'); 
+        })
+    }
    
    // toggle attempt
    showPhotoMenu = () => {
@@ -101,7 +115,8 @@ class App extends Component {
         route === 'signIn'
             ? <SignIn  loadUser={this.loadUser}
             onRouteChange={this.onRouteChange}/>
-            : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+            : <Register loadUser={this.loadUser} 
+            onRouteChange={this.onRouteChange}/>
             )
         }
       </div>
