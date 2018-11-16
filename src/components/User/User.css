@@ -1,0 +1,4 @@
+.sidebar {
+    overflow-y: scroll;
+    z-index: 1;
+}

@@ -1,0 +1,9 @@
+.Tilt {
+    width: 600px;
+    height: auto;
+    z-index: 0;
+}
+
+.text{
+    display: inline-table;
+}
