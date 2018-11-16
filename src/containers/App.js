@@ -36,7 +36,7 @@ class App extends Component {
             name: data.username,
             email: data.email,
             entries: data.entries,
-            joined: data.joined
+            date: data.joined
         }})
     }
     
@@ -51,10 +51,9 @@ class App extends Component {
     }
     
    onButtonSubmit = () => {
-        const { entries } = this.state.user;
         this.setState({imageUrl: this.state.input});
-        entries.push(this.state.input);
-        return entries;
+        this.state.user.entries.push(this.state.input);
+        return this.state.user.entries;
         } 
    
    // toggle attempt
@@ -100,7 +99,8 @@ class App extends Component {
             </div>
         : (
         route === 'signIn'
-            ? <SignIn onRouteChange={this.onRouteChange}/>
+            ? <SignIn  loadUser={this.loadUser}
+            onRouteChange={this.onRouteChange}/>
             : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             )
         }
