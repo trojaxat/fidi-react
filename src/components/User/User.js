@@ -26,7 +26,7 @@ class User extends React.Component {
     }
     
     onChangeIcons = () => {
-        fetch('http://localhost:3000/image', {
+        fetch('https://salty-oasis-94587.herokuapp.com/image', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({

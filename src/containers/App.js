@@ -11,6 +11,21 @@ import User from '../components/User/User';
 import 'tachyons';
 import './App.css';
 
+const initialState = {
+            menu: false,
+            input:'',
+            imageUrl:'',
+            route:'home',
+            isSignedIn:true,
+            user: {
+                id: 0,
+                username: '',
+                email: '',
+                entries: [],
+                joined: ''
+            }
+}
+
 class App extends Component {
     constructor(){
         super();
@@ -54,7 +69,7 @@ class App extends Component {
        // check while logged in and add photo to icons 
         this.setState({imageUrl: this.state.input});
         this.state.user.entries.push(this.state.input)
-        fetch('http://localhost:3000/addImage', {
+        fetch('https://salty-oasis-94587.herokuapp.com/addImage', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({
@@ -81,7 +96,7 @@ class App extends Component {
    
    onRouteChange = (route) => {
        if (route === 'signOut') {
-         this.setState({isSignedIn:false}) 
+         this.setState(initialState) 
        } else if (route === 'home') {
          this.setState({isSignedIn:true})  
        }

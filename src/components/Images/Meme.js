@@ -15,6 +15,7 @@ class Meme extends React.Component {
         }
     }
     
+    // can be put to backend to hide API key etc
     async fetchMeme(){
         this.setState({memeHome:this.state.memeLoading}) 
         const randNumber15 = () =>  Math.floor(Math.random()*(15))+1;
