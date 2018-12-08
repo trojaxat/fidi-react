@@ -5,7 +5,9 @@ class Icons extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            email: 'dan@gmail.com',
             icons: '',
+            iconNumbers: [0,1,2,3,4],
             uploaded1: 'https://preview.ibb.co/hpG6J0/cambodia.jpg',
             uploaded2: 'https://preview.ibb.co/hzJxQf/fun.jpg',
             uploaded3: 'https://preview.ibb.co/hpG6J0/cambodia.jpg',
@@ -20,21 +22,42 @@ class Icons extends React.Component {
     }
     
     onClickNext = () => {
+        //add 5 to every number in iconnumbers
         fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({
-                email : this.state.signInEmail,
+                email : this.state.email,
             })
         })
         .then(response => response.json())
         .then(links => {
-                this.setState({icons: links});
+            this.setState({uploaded1: links[this.state.iconNumbers[0]].link});
+            this.setState({uploaded2: links[this.state.iconNumbers[1]].link});
+            this.setState({uploaded3: links[this.state.iconNumbers[2]].link});
+            this.setState({uploaded4: links[this.state.iconNumbers[3]].link});
+            this.setState({uploaded5: links[this.state.iconNumbers[4]].link});
             }       
         )
     }
     onClickLast = () => {
-        return console.log('email',  this);
+        //add 5 to every number in iconnumbers
+        fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
+            method: 'post',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                email : this.state.email,
+            })
+        })
+        .then(response => response.json())
+        .then(links => {
+            this.setState({uploaded1: links[this.state.iconNumbers[0]].link});
+            this.setState({uploaded2: links[this.state.iconNumbers[1]].link});
+            this.setState({uploaded3: links[this.state.iconNumbers[2]].link});
+            this.setState({uploaded4: links[this.state.iconNumbers[3]].link});
+            this.setState({uploaded5: links[this.state.iconNumbers[4]].link});
+            }       
+        )
     }
     
     onChangeIcons = () => {
