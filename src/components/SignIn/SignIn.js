@@ -45,9 +45,7 @@ class SignIn extends React.Component {
         })
         .then(response => response.json())
         .then(links => {
-            console.log('links', links);
                 this.setState({icons: links});
-            console.log('icons', this.state.icons);
             }       
         )
     }

@@ -6,7 +6,7 @@ import Navigation from '../components/Navigation/Navigation';
 import Meme from '../components/Images/Meme';
 import Register from '../components/Register/Register';
 import SignIn from '../components/SignIn/SignIn';
-import User from '../components/User/User';
+import Icons from '../components/Icons/Icons';
 
 import 'tachyons';
 import './App.css';
@@ -118,7 +118,7 @@ class App extends Component {
         { route === 'home'
         ?   <div>
             <ErrorBoundary>
-            <User
+            <Icons
                 username={username} 
                 entries={entries}
                 imageUrl={imageUrl}

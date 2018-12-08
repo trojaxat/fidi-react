@@ -1,10 +1,11 @@
 import React from 'react';
-import './User.css'
+import './Icons.css'
 
-class User extends React.Component {
+class Icons extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            icons: '',
             uploaded1: 'https://preview.ibb.co/hpG6J0/cambodia.jpg',
             uploaded2: 'https://preview.ibb.co/hzJxQf/fun.jpg',
             uploaded3: 'https://preview.ibb.co/hpG6J0/cambodia.jpg',
@@ -19,7 +20,18 @@ class User extends React.Component {
     }
     
     onClickNext = () => {
-        return console.log('email',  this.props);
+        fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
+            method: 'post',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                email : this.state.signInEmail,
+            })
+        })
+        .then(response => response.json())
+        .then(links => {
+                this.setState({icons: links});
+            }       
+        )
     }
     onClickLast = () => {
         return console.log('email',  this);
@@ -102,4 +114,4 @@ class User extends React.Component {
     }
 }
 
-export default User;
+export default Icons;
