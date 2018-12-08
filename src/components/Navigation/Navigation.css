@@ -31,6 +31,7 @@ a {
 a:hover{
     text-decoration: none;
     color:cadetblue;
+    cursor:pointer;
 }
 
 .navbar{
@@ -44,6 +45,7 @@ a:hover{
 
 .navLinks:hover {
     color:cadetblue;
+    cursor:pointer;
 }
 
 .dropdownList {

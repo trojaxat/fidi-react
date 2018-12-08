@@ -68,7 +68,7 @@ class App extends Component {
    onButtonSubmit = () => {
        // check while logged in and add photo to icons 
         this.setState({imageUrl: this.state.input});
-        this.state.user.entries.push(this.state.input)
+        this.state.user.entries.push(this.state.input);
         fetch('https://salty-oasis-94587.herokuapp.com/addImage', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},

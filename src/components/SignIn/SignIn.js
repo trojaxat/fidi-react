@@ -6,7 +6,8 @@ class SignIn extends React.Component {
         super(props);
         this.state = {
             signInEmail: '',
-            signInPassword: ''
+            signInPassword: '',
+            icons: ''
         }
     }
     
@@ -34,6 +35,21 @@ class SignIn extends React.Component {
                 this.props.onRouteChange('home');
             }       
         })
+        
+        fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
+            method: 'post',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                email : this.state.signInEmail,
+            })
+        })
+        .then(response => response.json())
+        .then(links => {
+            console.log('links', links);
+                this.setState({icons: links});
+            console.log('icons', this.state.icons);
+            }       
+        )
     }
         
     render() {
