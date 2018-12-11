@@ -5,24 +5,39 @@ class Icons extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: 'dan@gmail.com',
+            email: this.props.email,
             icons: '',
             iconNumbers: [0,1,2,3,4],
-            uploaded1: 'https://preview.ibb.co/hpG6J0/cambodia.jpg',
-            uploaded2: 'https://preview.ibb.co/hzJxQf/fun.jpg',
-            uploaded3: 'https://preview.ibb.co/hpG6J0/cambodia.jpg',
-            uploaded4: 'https://preview.ibb.co/hpG6J0/cambodia.jpg',
-            uploaded5: 'https://preview.ibb.co/hzJxQf/fun.jpg',
-            name1: "cambodia.jpg",
-            name2: "fun.jpg",
-            name3: "cambodia.jpg",
-            name4: "cambodia.jpg",
-            name5: "cambodia.jpg"
+            uploaded1: '',
+            uploaded2: '',
+            uploaded3: '',
+            uploaded4: '',
+            uploaded5: '',
+            name1: "Please register or sign in to add photos",
+            name2: "Photo 1",
+            name3: "Photo 2",
+            name4: "Photo 3",
+            name5: "Photo 4"
         }
     }
     
+    changeIconValuesByX = (x) => {
+            let newArray= this.state.iconNumbers;
+            if ( x < 0 && newArray[0] < 1) {
+               this.setState({ iconNumbers : [0,1,2,3,4]})
+            } else {
+            newArray[0] = newArray[0] + x;
+            newArray[1] = newArray[1] + x;
+            newArray[2] = newArray[2] + x;
+            newArray[3] = newArray[3] + x;
+            newArray[4] = newArray[4] + x;
+            }
+            console.log('iconNumbers', this.state.iconNumbers);
+        }
+    
     onClickNext = () => {
-        //add 5 to every number in iconnumbers
+        this.changeIconValuesByX(5);
+        // changing setSTate might not be necessary because it force updates
         fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
@@ -37,11 +52,18 @@ class Icons extends React.Component {
             this.setState({uploaded3: links[this.state.iconNumbers[2]].link});
             this.setState({uploaded4: links[this.state.iconNumbers[3]].link});
             this.setState({uploaded5: links[this.state.iconNumbers[4]].link});
+            this.setState({name1: links[this.state.iconNumbers[0]].place});
+            this.setState({name2: links[this.state.iconNumbers[1]].place});
+            this.setState({name3: links[this.state.iconNumbers[2]].place});
+            this.setState({name4: links[this.state.iconNumbers[3]].place});
+            this.setState({name5: links[this.state.iconNumbers[4]].place});
             }       
         )
     }
+    
     onClickLast = () => {
-        //add 5 to every number in iconnumbers
+        this.changeIconValuesByX(-5);
+        
         fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
@@ -56,6 +78,11 @@ class Icons extends React.Component {
             this.setState({uploaded3: links[this.state.iconNumbers[2]].link});
             this.setState({uploaded4: links[this.state.iconNumbers[3]].link});
             this.setState({uploaded5: links[this.state.iconNumbers[4]].link});
+            this.setState({name1: links[this.state.iconNumbers[0]].place});
+            this.setState({name2: links[this.state.iconNumbers[1]].place});
+            this.setState({name3: links[this.state.iconNumbers[2]].place});
+            this.setState({name4: links[this.state.iconNumbers[3]].place});
+            this.setState({name5: links[this.state.iconNumbers[4]].place});
             }       
         )
     }

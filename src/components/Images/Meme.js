@@ -11,7 +11,8 @@ class Meme extends React.Component {
         this.state = {
             memeHome : MemePic,
             memeLoading : Loading,
-            memeError: Error
+            memeError: Error,
+            uploadedPic: this.props.uploaded
         }
     }
     

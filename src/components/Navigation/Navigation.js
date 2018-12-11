@@ -16,6 +16,9 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                             <a className="navLeft f5" id="water" href="http://localhost/Water-Project-1/waterlogged.html">{'Waterlogged Link'}</a>
                         </div>
                         <div className="navLinks pl3">
+                            <p className="navLeft f5" onClick={() => onRouteChange('signIn')}>{'Sign In'}</p>
+                        </div>
+                        <div className="navLinks pl3">
                             <p className="navLeft f5" onClick={() => onRouteChange('signOut')}>{'Sign Out'}</p>
                         </div>
 

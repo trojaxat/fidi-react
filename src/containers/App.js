@@ -40,7 +40,8 @@ class App extends Component {
                 username: '',
                 email: '',
                 entries: [],
-                joined: ''
+                joined: '',
+                uploadedPic: ''
             }
         }
     }
@@ -66,16 +67,17 @@ class App extends Component {
     }
     
    onButtonSubmit = () => {
-       // check while logged in and add photo to icons 
+        // check while logged in and add photo to icons
+        this.state.input.trim();
         this.setState({imageUrl: this.state.input});
-        this.state.user.entries.push(this.state.input);
+        const final = this.state.imageUrl.slice(30,50);
         fetch('https://salty-oasis-94587.herokuapp.com/addImage', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({
-                link : this.state.user.entries[0],
+                link : this.state.input,
                 email: this.state.user.email,
-                place: "hello"
+                place: final
             })
         })
         .then(picture => {
@@ -105,7 +107,7 @@ class App extends Component {
 
   render() {
       const { menu, imageUrl, route, isSignedIn } = this.state;
-      const { entries, username } = this.state.user;
+      const { entries, username, email, uploadedPic } = this.state.user;
     return (
       <div className="App">
         <Navigation 
@@ -122,9 +124,12 @@ class App extends Component {
                 username={username} 
                 entries={entries}
                 imageUrl={imageUrl}
+                email={email}
             />
             </ErrorBoundary>
-            <Meme />
+            <Meme 
+                uploadedPic={uploadedPic}
+            />
             </div>
         : (
         route === 'signIn'
