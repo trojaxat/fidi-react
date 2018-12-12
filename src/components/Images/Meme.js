@@ -12,7 +12,6 @@ class Meme extends React.Component {
             memeHome : MemePic,
             memeLoading : Loading,
             memeError: Error,
-            uploadedPic: this.props.uploaded
         }
     }
     
@@ -27,27 +26,40 @@ class Meme extends React.Component {
             this.setState({memeHome:data.result[a].instanceImageUrl})
         } catch(error) {
             this.setState({memeHome:this.state.memeError})        
+
         }
         return this.state.memeHome;
     }
 
-    render() {
-    return (
-            <div className='text br2'> <h4>{"Please click on the photo to load more memes."} </h4>
-                <Tilt className='Tilt br2' options={{ max : 25 }} > 
-                <div className='Tilt-inner'> 
-                <img 
-                    style={{margin:'5px'}} 
-                    src={this.state.memeHome}
-                    alt=''
-                    onClick={() => this.fetchMeme()}
-                />
-                    </div>
-                </Tilt>
-            </div>
-        );
+        render() {
+        if (this.props.isMemeOn) {
+            return (
+                <div className='text br2'> <h4 id='memeText' onClick={() => this.fetchMeme()}>{"Please click here or the meme to load more."} </h4>
+                    <Tilt className='Tilt br2' options={{ max : 25 }} > 
+                    <div className='Tilt-inner'> 
+                    <img 
+                        style={{margin:'5px'}} 
+                        src={this.state.memeHome}
+                        alt=''
+                        onClick={() => this.fetchMeme()}
+                    />
+                        </div>
+                    </Tilt>
+                </div>
+                );
+        } else {
+            return (
+                <div className='text br2'> <h4 id='memeText' onClick={this.props.turnMemeOn}>{"Please click here or the meme to load more."} </h4>
+                    <img
+                        className='Uploaded'
+                        style={{margin:'5px'}} 
+                        src={this.props.imageUrl}
+                        alt=''
+                    />
+                </div>            
+            );
+        }
     }
 }
 
-//                
 export default Meme;

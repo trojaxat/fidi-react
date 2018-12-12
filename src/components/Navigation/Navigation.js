@@ -15,9 +15,11 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                         <div className="navLinks pl3">
                             <a className="navLeft f5" id="water" href="http://localhost/Water-Project-1/waterlogged.html">{'Waterlogged Link'}</a>
                         </div>
+                            
                         <div className="navLinks pl3">
                             <p className="navLeft f5" onClick={() => onRouteChange('signIn')}>{'Sign In'}</p>
                         </div>
+                            
                         <div className="navLinks pl3">
                             <p className="navLeft f5" onClick={() => onRouteChange('signOut')}>{'Sign Out'}</p>
                         </div>
@@ -25,14 +27,6 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                         <div className="navLinks pl3">
                             <p className="buttonPhoto f5"> {'Photos ▼'} </p>
                             <div className="dropdown pl6 tl dib"> 
-                            {/*<ul className="dropdownList shadow-2">
-                                <a className="dropdown-item" href="#page1">{'Page 1'}</a>
-                                <a className="dropdown-item" href="#page2">{'Page 2'}</a>
-                                <a className="dropdown-item" href="#page3">{'Page 3'}</a>
-                                <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#pages">{'Upload pics for more pages!'}</a>
-                                <a className="dropdown-item" href="#meme2">{'Want a meme instead?'}</a>
-                            </ul>*/}
                             </div>
                         </div>
                     </ul>
@@ -70,24 +64,18 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                         <div className="navLinks pl3">
                             <a className="navLeft f5" id="water" href="http://localhost/Water-Project-1/waterlogged.html">{'Waterlogged Link'}</a>
                         </div>
+                            
                         <div className="navLinks pl3">
                             <p className="navLeft f5" onClick={() => onRouteChange('signIn')} >{'Sign In'}</p>
                         </div>
+                            
                         <div className="navLinks pl3">
                             <p className="navLeft f5" onClick={() => onRouteChange('register')} >{'Register'}</p>
                         </div>
 
                         <div className="navLinks pl3">
+                            <p className="buttonPhoto f5"> {'Photos ▼'} </p>
                             <div className="dropdown pl6 tl dib"> 
-                            <div className="buttonPhoto f5"> {'Photos ▼'} </div>
-                            {/*<ul className="dropdownList shadow-2">
-                                <a className="dropdown-item" href="#page1">{'Page 1'}</a>
-                                <a className="dropdown-item" href="#page2">{'Page 2'}</a>
-                                <a className="dropdown-item" href="#page3">{'Page 3'}</a>
-                                <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#pages">{'Upload pics for more pages!'}</a>
-                                <a className="dropdown-item" href="#meme2">{'Want a meme instead?'}</a>
-                            </ul>*/}
                             </div>
                         </div>
                     </ul>

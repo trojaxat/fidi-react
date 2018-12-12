@@ -16,7 +16,8 @@ const initialState = {
             input:'',
             imageUrl:'',
             route:'home',
-            isSignedIn:true,
+            isSignedIn:false,
+            isMemeOn:true,
             user: {
                 id: 0,
                 username: '',
@@ -31,10 +32,11 @@ class App extends Component {
         super();
         this.state = {
             menu: false,
-            input:'',
-            imageUrl:'',
+            input:'http://placekitten.com/g/600/300',
+            imageUrl:'http://placekitten.com/g/600/300',
             route:'home',
-            isSignedIn:true,
+            isSignedIn:false,
+            isMemeOn:true,
             user: {
                 id: 0,
                 username: '',
@@ -61,13 +63,17 @@ class App extends Component {
         .then(response => response.json())
         .then(console.log)
     }
-        
+
+    turnMemeOn = () => {
+        this.setState({isMemeOn:true})
+    }
+
     onInputChange = (event) => {
         this.setState({input: event.target.value});
     }
     
    onButtonSubmit = () => {
-        // check while logged in and add photo to icons
+        this.setState({isMemeOn : false});
         this.state.input.trim();
         this.setState({imageUrl: this.state.input});
         const final = this.state.imageUrl.slice(30,50);
@@ -87,15 +93,6 @@ class App extends Component {
         })
     }
    
-   // toggle attempt
-   showPhotoMenu = () => {
-       if (this.setState === true) {
-         this.setState({isSignedIn:false}) 
-       } else {
-         this.setState({isSignedIn:true})  
-       }
-   }
-   
    onRouteChange = (route) => {
        if (route === 'signOut') {
          this.setState(initialState) 
@@ -106,7 +103,7 @@ class App extends Component {
    }
 
   render() {
-      const { menu, imageUrl, route, isSignedIn } = this.state;
+      const { menu, imageUrl, route, isSignedIn, input, isMemeOn } = this.state;
       const { entries, username, email, uploadedPic } = this.state.user;
     return (
       <div className="App">
@@ -127,8 +124,12 @@ class App extends Component {
                 email={email}
             />
             </ErrorBoundary>
-            <Meme 
+            <Meme
+                turnMemeOn={this.turnMemeOn}
+                isMemeOn={isMemeOn}
                 uploadedPic={uploadedPic}
+                imageUrl={imageUrl}
+                input={input}  
             />
             </div>
         : (
