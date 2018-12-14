@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Navigation.css"
 
-const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, showPhotoMenu }) => {
+const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, showPhotoMenu, onButtonSearch, onSearchChange }) => {
         if (isSignedIn) {
          return (
             <nav className="bg-light">
@@ -41,9 +41,12 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                             onClick={onButtonSubmit}> {'Upload'} </button>
                         </div>
                     <div className='SearchBox tc pa2 br2 dib shadow-5'>
-                        <input className='br2 pa2' placeholder={'Search for photo...'} type='text' onChange={onInputChange}/>
-                        <button className='br2 grow link ph3 pv2 bg-light-blue' 
-                            onClick={onButtonSubmit}> {'Search'} </button>
+                        <input className='br2 pa2' placeholder={'Search for photo...'} type='text' onChange={onSearchChange}/>
+                        <button 
+                            className='br2 grow link ph3 pv2 bg-light-blue' 
+                            onClick={onButtonSearch}
+                            id="submitHashtag"
+                            > {'Search'} </button>
                         </div>
                         </div>
                     </div>
@@ -75,7 +78,7 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
 
                         <div className="navLinks pl3">
                             <p className="buttonPhoto f5"> {'Photos ▼'} </p>
-                            <div className="dropdown pl6 tl dib"> 
+                            <div className="dropdown pl6 tl dib">
                             </div>
                         </div>
                     </ul>
@@ -86,13 +89,19 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                     <div className="InputBoxes">
                     <div className='UploadBox tc pa2 br2 dib shadow-5'>
                         <input className='br2 pa2' placeholder={'Upload photos...'} type='text' onChange={onInputChange}/>
-                        <button className='br2 grow link ph3 pv2 bg-light-purple' 
-                            onClick={onButtonSubmit}> {'Upload'} </button>
+                        <button 
+                            className='br2 grow link ph3 pv2 bg-light-purple' 
+                            onClick={onButtonSubmit}
+                            id="submitLink"
+                            > {'Upload'} </button>
                         </div>
                     <div className='SearchBox tc pa2 br2 dib shadow-5'>
-                        <input className='br2 pa2' placeholder={'Search for photo...'} type='text' onChange={onInputChange}/>
-                        <button className='br2 grow link ph3 pv2 bg-light-blue' 
-                            onClick={onButtonSubmit}> {'Search'} </button>
+                        <input className='br2 pa2' placeholder={'Search for photo...'} type='text' onChange={onSearchChange}/>
+                        <button 
+                            className='br2 grow link ph3 pv2 bg-light-blue' 
+                            onClick={onButtonSearch}
+                            id="submitHashtag"
+                            > {'Search'} </button>
                         </div>
                         </div>
                     </div>

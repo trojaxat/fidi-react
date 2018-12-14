@@ -32,7 +32,6 @@ class Icons extends React.Component {
             newArray[3] = newArray[3] + x;
             newArray[4] = newArray[4] + x;
             }
-            console.log('iconNumbers', this.state.iconNumbers);
         }
     
     onClickNext = () => {

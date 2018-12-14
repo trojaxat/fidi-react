@@ -14,6 +14,7 @@ import './App.css';
 const initialState = {
             menu: false,
             input:'',
+            search: '',
             imageUrl:'',
             route:'home',
             isSignedIn:false,
@@ -67,9 +68,17 @@ class App extends Component {
     turnMemeOn = () => {
         this.setState({isMemeOn:true})
     }
+    
+    deleteImageUrl = () => {
+        this.setState({imageUrl: ''})
+    }
 
     onInputChange = (event) => {
         this.setState({input: event.target.value});
+    }
+    
+    onSearchChange = (event) => {
+        this.setState({search: event.target.value});
     }
     
    onButtonSubmit = () => {
@@ -93,6 +102,22 @@ class App extends Component {
         })
     }
    
+   onButtonSearch = () => {
+       fetch('https://salty-oasis-94587.herokuapp.com/addImage', {
+            method: 'post',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                search : this.state.search,
+                email: this.state.user.email,
+            })
+        })
+        .then(picture => {
+            console.log("Photo found successfully");
+        }).catch(err => {
+            console.log('Photo not found'); 
+        })
+   }
+   
    onRouteChange = (route) => {
        if (route === 'signOut') {
          this.setState(initialState) 
@@ -110,6 +135,8 @@ class App extends Component {
         <Navigation 
             onInputChange={this.onInputChange} 
             onRouteChange={this.onRouteChange} 
+            onSearchChange={this.onSearchChange} 
+            onButtonSearch={this.onButtonSearch} 
             onButtonSubmit={this.onButtonSubmit}
             isSignedIn={isSignedIn}
             showPhotoMenu={menu}
@@ -126,10 +153,12 @@ class App extends Component {
             </ErrorBoundary>
             <Meme
                 turnMemeOn={this.turnMemeOn}
+                deleteImageUrl={this.deleteImageUrl}
                 isMemeOn={isMemeOn}
                 uploadedPic={uploadedPic}
                 imageUrl={imageUrl}
-                input={input}  
+                input={input}
+                email={email}
             />
             </div>
         : (

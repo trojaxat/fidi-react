@@ -12,9 +12,65 @@ class Meme extends React.Component {
             memeHome : MemePic,
             memeLoading : Loading,
             memeError: Error,
+            showMenu: true,
+            name: '',
+            place: ''
         }
+    this.showMenu = this.showMenu.bind(this);
+    }
+  
+      showMenu(event) {
+        event.preventDefault();
+
+        this.setState({
+          showMenu: true,
+        });
+      }
+    
+    onNameChange = (event) => {
+        this.setState({name: event.target.value});
+    }
+    onPlaceChange = (event) => {
+        this.setState({place: event.target.value});
     }
     
+    onButtonDelete = () => {
+        fetch('https://salty-oasis-94587.herokuapp.com/deleteImage', {
+            method: 'delete',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                link : this.props.imageUrl,
+                email: this.props.email
+            })
+        })
+        .then(picture => {
+            console.log("Photo deleted successfully");
+        }).catch(err => {
+            console.log('Photo not updated'); 
+        })
+        this.setState({ showMenu: false});
+        this.props.deleteImageUrl()
+    }
+    
+    onButtonUpdate = () => {
+       fetch('https://salty-oasis-94587.herokuapp.com/updateImage', {
+            method: 'post',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                link : this.props.imageUrl,
+                email: this.props.email,
+                name: this.state.name,
+                place: this.state.place
+            })
+        })
+        .then(picture => {
+            console.log("Photo updated successfully");
+        }).catch(err => {
+            console.log('Photo not updated'); 
+        })
+    }
+    
+     
     // can be put to backend to hide API key etc
     async fetchMeme(){
         this.setState({memeHome:this.state.memeLoading}) 
@@ -34,7 +90,7 @@ class Meme extends React.Component {
         render() {
         if (this.props.isMemeOn) {
             return (
-                <div className='text br2'> <h4 id='memeText' onClick={() => this.fetchMeme()}>{"Please click here or the meme to load more."} </h4>
+                <div className='text br2'> <h4 id='memeText' onClick={() => this.fetchMeme()}>{"Click the image to add info or load more memes."} </h4>
                     <Tilt className='Tilt br2' options={{ max : 25 }} > 
                     <div className='Tilt-inner'> 
                     <img 
@@ -55,7 +111,25 @@ class Meme extends React.Component {
                         style={{margin:'5px'}} 
                         src={this.props.imageUrl}
                         alt=''
+                        onClick={this.showMenu}
                     />
+                    <div className="bg-white pa2 ph3-ns pb3-ns">
+                        <h1 className="f5 f4-ns mv0">{this.props.input}</h1>
+                    </div> 
+                {
+                this.state.showMenu
+                ? (
+              <div className="menu">
+                <input className='br2 pa2' placeholder={'Name'} type='text' onChange={this.onNameChange}/>
+                <input className='br2 pa2' placeholder={'Hashtag'} type='text' onChange={this.onPlaceChange}/>
+                    <button className='br2 grow link ph3 pv2 bg-light-purple' onClick={this.onButtonUpdate}> {'Update'} </button>
+                    <button className='br2 grow link ph3 pv2 bg-light-blue' onClick={this.onButtonDelete}> {'Delete'} </button>
+              </div>
+            )
+            : (
+              null
+            )
+        }
                 </div>            
             );
         }
