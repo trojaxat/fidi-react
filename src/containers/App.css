@@ -15,7 +15,7 @@
 
 .Meme {
     position:fixed;
-    width: 75%;
+    width: 100%;
     height: 100%;
     background-image: url("/src/photos/1.jpg");
     background-size: cover;

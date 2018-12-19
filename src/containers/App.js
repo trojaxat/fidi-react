@@ -53,7 +53,7 @@ class App extends Component {
     loadUser = (data) => {
         this.setState( {user: {
             id: data.id,
-            name: data.username,
+            username: data.username,
             email: data.email,
             entries: data.entries,
             date: data.joined

@@ -8,6 +8,7 @@ class Icons extends React.Component {
             email: this.props.email,
             icons: '',
             iconNumbers: [0,1,2,3,4],
+            totalUploaded: '',
             uploaded1: '',
             uploaded2: '',
             uploaded3: '',
@@ -46,6 +47,7 @@ class Icons extends React.Component {
         })
         .then(response => response.json())
         .then(links => {
+            this.setState({totalUploaded: links.length});
             this.setState({uploaded1: links[this.state.iconNumbers[0]].link});
             this.setState({uploaded2: links[this.state.iconNumbers[1]].link});
             this.setState({uploaded3: links[this.state.iconNumbers[2]].link});
@@ -62,7 +64,6 @@ class Icons extends React.Component {
     
     onClickLast = () => {
         this.changeIconValuesByX(-5);
-        
         fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
@@ -72,6 +73,7 @@ class Icons extends React.Component {
         })
         .then(response => response.json())
         .then(links => {
+            this.setState({totalUploaded: links.length});
             this.setState({uploaded1: links[this.state.iconNumbers[0]].link});
             this.setState({uploaded2: links[this.state.iconNumbers[1]].link});
             this.setState({uploaded3: links[this.state.iconNumbers[2]].link});
@@ -101,19 +103,43 @@ class Icons extends React.Component {
     }
 
     render() {
+    if (this.state.uploaded1 === '') {
     return (
             <div className='sidebar'>
                 <div className='title'> 
-                    Name Uploaded photos: Amount </div>
+                    {this.props.username} Uploaded photos: {this.state.totalUploaded} </div>
                     <div className="buttons">
                     <button 
                         type="button" 
-                        className="btn btn-primary btn-sm"
+                        className="btn black btn-primary btn-sm"
                         onClick={this.onClickLast}
                     > ❮ Previous </button>
                     <button 
                         type="button"   
-                        className="btn btn-primary btn-sm"
+                        className="btn black btn-primary btn-sm"
+                        onClick={this.onClickNext}
+                    > Next ❯ </button>
+                    </div>
+                <div className="div images">
+                <ul className="uploaded images">
+                </ul>
+                </div>
+            </div>
+        );
+    } else {
+            return (
+            <div className='sidebar'>
+                <div className='title'> 
+                {this.props.username} uploaded photos: {this.state.totalUploaded} </div>
+                    <div className="buttons">
+                    <button 
+                        type="button" 
+                        className="btn black btn-primary btn-sm"
+                        onClick={this.onClickLast}
+                    > ❮ Previous </button>
+                    <button 
+                        type="button"   
+                        className="btn black btn-primary btn-sm"
                         onClick={this.onClickNext}
                     > Next ❯ </button>
                     </div>
@@ -153,7 +179,8 @@ class Icons extends React.Component {
                 </ul>
                 </div>
             </div>
-        );
+            );
+        }
     }
 }
 

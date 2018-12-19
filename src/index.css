@@ -1,6 +1,6 @@
 
 body {
-    background-image: url("photos/2.jpg");
+    background-image: url("photos/3.jpg");
     color: black;
     background-color: rgba(19, 22, 50, 1);
     background-size: cover;
@@ -17,7 +17,6 @@ body {
     position:fixed;
     width: 25%;
     height: 100%;
-    background-image: url("photos/1.jpg");
     background-size: cover;
 }
 

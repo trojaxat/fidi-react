@@ -105,7 +105,7 @@ class Meme extends React.Component {
         render() {
         if (this.props.isMemeOn) {
             return (
-                <div className='text br2'> <h4 id='memeText' onClick={() => this.fetchMeme()}>{"Click the image to add info or load more memes."} </h4>
+                <div className='text br2'> 
                     <Tilt className='Tilt br2' options={{ max : 25 }} > 
                     <div className='Tilt-inner'> 
                     <img 
@@ -116,6 +116,7 @@ class Meme extends React.Component {
                     />
                         </div>
                     </Tilt>
+                    <h4 className="text bg-light pa3 br2" id='memeText' onClick={() => this.fetchMeme()}>{"Click the image to add info or load more memes."} </h4>
                 </div>
                 );
         } else if (!this.props.submitWithoutEmail) {
@@ -126,7 +127,7 @@ class Meme extends React.Component {
                 )
         } else {
             return (
-                <div className='text br2'> <h4 id='memeText' onClick={this.props.turnMemeOn}>{"Please click here or the meme to load more."} </h4>
+                <div className='text br2'> 
                     <img
                         className='Uploaded'
                         style={{margin:'5px'}} 
@@ -134,6 +135,8 @@ class Meme extends React.Component {
                         alt=''
                         onClick={this.showMenu}
                     />
+                    <h4 id='memeText' onClick={this.props.turnMemeOn}>{"Please click here or the meme to load more."} </h4>
+                    
                     <div className="bg-white pa2 ph3-ns pb3-ns">
                         <h1 className="f5 f4-ns mv0">{this.state.uploadedPhoto.name} {this.state.uploadedPhoto.place}</h1>
                         <h1 className="f5 f4-ns mv0">{this.state.uploadedPhoto.link}</h1>
