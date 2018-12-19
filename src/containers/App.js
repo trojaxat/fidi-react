@@ -58,6 +58,7 @@ class App extends Component {
             entries: data.entries,
             date: data.joined
         }})
+        this.setState({submitWithoutEmail:true})
     }
     
     componentDidMount() {
@@ -66,6 +67,10 @@ class App extends Component {
         .then(console.log)
     }
 
+    fetchData() {
+        
+    }
+    
     turnMemeOn = () => {
         this.setState({isMemeOn:true})
     }
@@ -84,11 +89,9 @@ class App extends Component {
     
    onButtonSubmit = () => {
        if (this.state.user.email === '') {
-        this.setState({submitWithoutEmail : true});
         this.setState({isMemeOn:false});
        } else {
-        this.setState({isMemeOn : false});
-        this.setState({submitWithoutEmail : false});
+        this.setState({isMemeOn:false});
         this.state.input.trim();
         this.setState({imageUrl: this.state.input});
         const final = this.state.imageUrl.slice(30,50);
@@ -135,7 +138,7 @@ class App extends Component {
    }
 
   render() {
-      const { menu, imageUrl, route, isSignedIn, input, isMemeOn } = this.state;
+      const { menu, imageUrl, route, isSignedIn, input, isMemeOn, submitWithoutEmail } = this.state;
       const { entries, username, email, uploadedPic } = this.state.user;
     return (
       <div className="App">
@@ -166,6 +169,8 @@ class App extends Component {
                 imageUrl={imageUrl}
                 input={input}
                 email={email}
+                submitWithoutEmail={submitWithoutEmail}
+                fetchData={this.fetchData}
             />
             </div>
         : (

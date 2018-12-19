@@ -79,13 +79,11 @@ class Meme extends React.Component {
                 name: data.name,
                 place: data.place,
             }})
-            console.log('uploadedPhoto', data);
         }).catch(err => {
             console.log('Photo not updated'); 
         })
-    }
+    } 
     
-     
     // can be put to backend to hide API key etc
     async fetchMeme(){
         this.setState({memeHome:this.state.memeLoading}) 
@@ -97,12 +95,11 @@ class Meme extends React.Component {
             this.setState({memeHome:data.result[a].instanceImageUrl})
         } catch(error) {
             this.setState({memeHome:this.state.memeError})        
-
         }
         return this.state.memeHome;
     }
 
-        render() {
+    render() {
         if (this.props.isMemeOn) {
             return (
                 <div className='text br2'> 
@@ -135,9 +132,10 @@ class Meme extends React.Component {
                         alt=''
                         onClick={this.showMenu}
                     />
-                    <h4 id='memeText' onClick={this.props.turnMemeOn}>{"Please click here or the meme to load more."} </h4>
                     
-                    <div className="bg-white pa2 ph3-ns pb3-ns">
+                    
+                    <div className="bg-white pa2 ph3-ns pb3-ns br2">
+                        <h4 className="text bg-light pa2 br2" id='memeText' onClick={this.props.turnMemeOn}>{"Please click here or the meme to load more."} </h4>
                         <h1 className="f5 f4-ns mv0">{this.state.uploadedPhoto.name} {this.state.uploadedPhoto.place}</h1>
                         <h1 className="f5 f4-ns mv0">{this.state.uploadedPhoto.link}</h1>
                     </div> 
