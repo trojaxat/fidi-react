@@ -34,9 +34,10 @@ class App extends Component {
         this.state = {
             menu: false,
             input:'http://placekitten.com/g/600/300',
-            imageUrl:'http://placekitten.com/g/600/300',
+            imageUrl:'',
             route:'home',
             isSignedIn:false,
+            submitWithoutEmail: false,
             isMemeOn:true,
             user: {
                 id: 0,
@@ -82,7 +83,12 @@ class App extends Component {
     }
     
    onButtonSubmit = () => {
+       if (this.state.user.email === '') {
+        this.setState({submitWithoutEmail : true});
+        this.setState({isMemeOn:false});
+       } else {
         this.setState({isMemeOn : false});
+        this.setState({submitWithoutEmail : false});
         this.state.input.trim();
         this.setState({imageUrl: this.state.input});
         const final = this.state.imageUrl.slice(30,50);
@@ -100,6 +106,7 @@ class App extends Component {
         }).catch(err => {
             console.log('Photo not added'); 
         })
+       }
     }
    
    onButtonSearch = () => {

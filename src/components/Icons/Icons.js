@@ -119,13 +119,7 @@ class Icons extends React.Component {
                     </div>
                 <div className="div images">
                 <ul className="uploaded images">
-                    <div className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw5 center">
-                      <img src={this.props.imageUrl} className="db w-100 br2 br--top" alt=""/>
-                      <div className="bg-white pa2 ph3-ns pb3-ns">
-                            <h1 className="f5 f4-ns mv0">Cat</h1>
-                          </div>
-                    </div>
-        
+                    
                     <div className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw5 center">
                       <img src={this.state.uploaded1} className="db w-100 br2 br--top" alt=""/>
                           <div className="bg-white pa2 ph3-ns pb3-ns">

@@ -14,7 +14,14 @@ class Meme extends React.Component {
             memeError: Error,
             showMenu: true,
             name: '',
-            place: ''
+            place: '',
+            uploadedPhoto: {
+                id: '',
+                email: '',
+                link: '',
+                place: '',
+                name: '',
+            }
         }
     this.showMenu = this.showMenu.bind(this);
     }
@@ -63,8 +70,16 @@ class Meme extends React.Component {
                 place: this.state.place
             })
         })
-        .then(picture => {
+        .then(response => response.json())
+        .then(data => {
             console.log("Photo updated successfully");
+            this.setState( {uploadedPhoto: {
+                link: data.link,
+                email: data.email,
+                name: data.name,
+                place: data.place,
+            }})
+            console.log('uploadedPhoto', data);
         }).catch(err => {
             console.log('Photo not updated'); 
         })
@@ -103,6 +118,12 @@ class Meme extends React.Component {
                     </Tilt>
                 </div>
                 );
+        } else if (!this.props.submitWithoutEmail) {
+            return (
+                <div className="text br-4"> <h4 className="bg-dark red pa2 ph3 pb3 br2" id='memeText' onClick={this.props.turnMemeOn}>{"Please sign in to add photos"}
+                    </h4>
+                    </div>
+                )
         } else {
             return (
                 <div className='text br2'> <h4 id='memeText' onClick={this.props.turnMemeOn}>{"Please click here or the meme to load more."} </h4>
@@ -114,7 +135,8 @@ class Meme extends React.Component {
                         onClick={this.showMenu}
                     />
                     <div className="bg-white pa2 ph3-ns pb3-ns">
-                        <h1 className="f5 f4-ns mv0">{this.props.input}</h1>
+                        <h1 className="f5 f4-ns mv0">{this.state.uploadedPhoto.name} {this.state.uploadedPhoto.place}</h1>
+                        <h1 className="f5 f4-ns mv0">{this.state.uploadedPhoto.link}</h1>
                     </div> 
                 {
                 this.state.showMenu

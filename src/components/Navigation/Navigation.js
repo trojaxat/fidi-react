@@ -36,7 +36,7 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                 <div className="navLinks">
                     <div className="InputBoxes">
                     <div className='UploadBox tc pa2 br2 dib shadow-5'>
-                        <input className='br2 pa2' placeholder={'Upload photos...'} type='text' onChange={onInputChange}/>
+                        <input className='br2 pa2' placeholder={'Add photo link...'} type='text' onChange={onInputChange}/>
                         <button className='br2 grow link ph3 pv2 bg-light-purple' 
                             onClick={onButtonSubmit}> {'Upload'} </button>
                         </div>
