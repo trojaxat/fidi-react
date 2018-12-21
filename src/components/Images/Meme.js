@@ -41,6 +41,30 @@ class Meme extends React.Component {
         this.setState({place: event.target.value});
     }
     
+   componentDidUpdate(nextProps, nextState) {
+      if (this.props.imageUrl !== nextProps.imageUrl) {
+          this.setState({showMenu: true});
+          }
+      }
+
+    showLink = () => {
+        fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
+            method: 'post',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                link : this.props.imageUrl,
+                email: this.props.email
+            })
+        })
+        .then(response => response.json())
+        .then(link => {
+            console.log("Link acquired");
+            return link[0].link;
+        }).catch(err => {
+            console.log('No link found'); 
+        })
+    }
+    
     onButtonDelete = () => {
         fetch('https://salty-oasis-94587.herokuapp.com/deleteImage', {
             method: 'delete',
@@ -118,7 +142,7 @@ class Meme extends React.Component {
                 );
         } else if (!this.props.submitWithoutEmail) {
             return (
-                <div className="text br-4"> <h4 className="bg-dark red pa2 ph3 pb3 br2" id='memeText' onClick={this.props.turnMemeOn}>{"Please sign in to add photos"}
+                <div className="text br-4"> <h4 className="bg-dark red pa2 ph3 pb3 br2" id='memeText' onClick={this.props.turnMemeOn}>{"Please sign in to add/remove photos"}
                     </h4>
                     </div>
                 )
@@ -137,7 +161,7 @@ class Meme extends React.Component {
                     <div className="bg-white pa2 ph3-ns pb3-ns br2">
                         <h4 className="text bg-light pa2 br2" id='memeText' onClick={this.props.turnMemeOn}>{"Please click here or the meme to load more."} </h4>
                         <h1 className="f5 f4-ns mv0">{this.state.uploadedPhoto.name} {this.state.uploadedPhoto.place}</h1>
-                        <h1 className="f5 f4-ns mv0"> Link </h1>
+                        <h1 id="memeText" className="f5 f4-ns mv0" onClick={this.showLink}> Link  </h1>
                     </div> 
                 {
                 this.state.showMenu

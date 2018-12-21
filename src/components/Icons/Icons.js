@@ -14,12 +14,26 @@ class Icons extends React.Component {
             uploaded3: '',
             uploaded4: '',
             uploaded5: '',
-            name1: "Please register or sign in to add photos",
+            name1: "Please register or sign in to add/remove photos",
             name2: "Photo 1",
             name3: "Photo 2",
             name4: "Photo 3",
             name5: "Photo 4"
         }
+    }
+    
+    kitten = () => {
+        this.setState({uploaded1: 'http://placekitten.com/g/600/300'});
+        this.setState({name1: 'Please add links to see your photos'});
+    }
+    
+    componentDidUpdate(nextProps, nextState) {
+      if (this.props.imageUrl !== nextProps.imageUrl) {
+            this.onClickLast(-5);
+      }
+      if (this.props.submitWithoutEmail !== nextProps.submitWithoutEmail) {
+            this.onClickLast(-5);
+      }
     }
     
     changeIconValuesByX = (x) => {
@@ -33,10 +47,8 @@ class Icons extends React.Component {
             newArray[3] = newArray[3] + x;
             newArray[4] = newArray[4] + x;
             }
-        
-        console.log('this.state.iconNumbers', this.state.iconNumbers);
         }
-    
+
     onClickNext = () => {
         fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
             method: 'post',
@@ -44,13 +56,11 @@ class Icons extends React.Component {
             body: JSON.stringify({
                 email : this.state.email,
             })
-        })
-        .then(response => response.json())
+        }).then(response => response.json())
         .then(links => {
             this.changeIconValuesByX(5);
             this.setState({totalUploaded: links.length});
             let difference = this.state.iconNumbers[4] - links.length;
-            console.log('difference', difference);
             if (difference === 0) {
                 this.changeIconValuesByX(-5);
                 this.loadNumberOfImages(links);
@@ -61,8 +71,7 @@ class Icons extends React.Component {
             } else if (links.length >= 1) {
                 this.loadNumberOfImages(links);
             } else {
-                this.setState({uploaded1: 'http://placekitten.com/g/600/300'});
-                this.setState({name1: 'Please add links to see your photos'});
+                this.kitten();
             }
         })
     }
@@ -75,20 +84,17 @@ class Icons extends React.Component {
             body: JSON.stringify({
                 email : this.state.email,
             })
-        })
-        .then(response => response.json())
+        }).then(response => response.json())
         .then(links => {
-            let difference = this.state.iconNumbers[4] - links.length;
-            console.log('difference', difference);
             this.setState({totalUploaded: links.length});
             if (links.length >= 1) {
                 this.loadNumberOfImages(links);
             } else {
-                this.setState({uploaded1: 'http://placekitten.com/g/600/300'});
-                this.setState({name1: 'Please add links to see your photos'});
+                this.kitten();
             }
         })
     }
+    
     
     loadNumberOfImages = (links, difference) => {
             if (typeof(links[4]) !== 'undefined') {
@@ -138,22 +144,15 @@ class Icons extends React.Component {
                 email : this.state.email,
                 id: this.state.id
             })
-        })
-        .then(response => {
+        }).then(response => {
             console.log(response.json())
         })      
     }
     
-    componentDidUpdate(prevProps) {
-      if (this.props.username !== prevProps.username) {
-        console.log('this.props.username', this.props.user.username);
-        this.onClickLast(-5);
-      }
-      else if (this.props.submitWithoutEmail !== prevProps.submitWithoutEmail) {
-        console.log('this.props.username', this.props.user.submitWithoutEmail);
-        this.onClickLast(-5);
-      }
+    sendLink = (number) => {
+        return this.props.showIconPhoto(number)
     }
+
 
     render() {
     if (this.state.uploaded1 === '') {
@@ -204,56 +203,71 @@ class Icons extends React.Component {
                     <div className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw5 center">
                       <img 
                         src={this.state.uploaded1} 
-                        onClick={this.props.showIconPhoto(1)} 
+                        onClick={() => this.sendLink(this.state.uploaded1)} 
                         className="db w-100 br2 br--top" 
                         alt=""
                         />
                           <div className="bg-white pa2 ph3-ns pb3-ns">
-                            <h1 className="f5 f4-ns mv0">{this.state.name1}</h1>
-                          </div>
+                            <h1 className="f5 f4-ns mv0" 
+                                onClick={() => this.sendLink(this.state.uploaded1)}>
+                                {this.state.name1}
+                                </h1>
+                                </div>
                     </div>
                     <div className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw5 center">
                       <img 
                         src={this.state.uploaded2} 
                         className="db w-100 br2 br--top" 
-                        onClick={this.props.showIconPhoto(2)}
+                        onClick={() => this.sendLink(this.state.uploaded2)} 
                         alt=""
                         />
                           <div className="bg-white pa2 ph3-ns pb3-ns">
-                            <h1 className="f5 f4-ns mv0">{this.state.name2}</h1>
-                          </div>
+                            <h1 className="f5 f4-ns mv0" 
+                                onClick={() => this.sendLink(this.state.uploaded2)}>
+                                {this.state.name2}
+                                </h1>
+                                </div>
                     </div>
                     <div className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw5 center">
                       <img 
                         src={this.state.uploaded3} 
                         className="db w-100 br2 br--top" 
-                        onClick={this.props.showIconPhoto(3)}
+                        onClick={() => this.sendLink(this.state.uploaded3)} 
                         alt=""
                         />
-                          <div className="bg-white pa2 ph3-ns pb3-ns">
-                            <h1 className="f5 f4-ns mv0">{this.state.name3}</h1>
-                          </div>
+                         <div className="bg-white pa2 ph3-ns pb3-ns">
+                            <h1 className="f5 f4-ns mv0" 
+                                onClick={() => this.sendLink(this.state.uploaded3)}>
+                                {this.state.name3}
+                                </h1>
+                                </div>
                     </div>
                     <div className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw5 center">
                       <img 
                         src={this.state.uploaded4} 
                         className="db w-100 br2 br--top" 
-                        onClick={this.props.showIconPhoto(4)}
+                        onClick={() => this.sendLink(this.state.uploaded4)} 
                         alt=""
                         />
                           <div className="bg-white pa2 ph3-ns pb3-ns">
-                            <h1 className="f5 f4-ns mv0">{this.state.name4}</h1>
-                          </div>
+                            <h1 className="f5 f4-ns mv0" 
+                                onClick={() => this.sendLink(this.state.uploaded4)}>
+                                {this.state.name4}
+                                </h1>
+                                </div>
                     </div>
                     <div className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw5 center">
                       <img 
                         src={this.state.uploaded5} 
                         className="db w-100 br2 br--top" 
-                        onClick={this.props.showIconPhoto(5)}
+                        onClick={() => this.sendLink(this.state.uploaded5)} 
                         alt=""
                         />
                           <div className="bg-white pa2 ph3-ns pb3-ns">
-                            <h1 className="f5 f4-ns mv0">{this.state.name5}</h1>
+                            <h1 className="f5 f4-ns mv0" 
+                                onClick={() => this.sendLink(this.state.uploaded5)}>
+                                {this.state.name5}
+                                </h1>
                           </div>
                 </div>
                 </ul>

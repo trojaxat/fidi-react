@@ -2,7 +2,8 @@ import React from 'react';
 import "./Navigation.css"
 
 const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, showPhotoMenu, onButtonSearch, onSearchChange }) => {
-        if (isSignedIn) {
+    //<a className="navLeft f5" id="water" href="http://localhost/Water-Project-1/waterlogged.html">{'Waterlogged Link'}</a>
+    if (isSignedIn) {
          return (
             <nav className="bg-light">
                 <div className="navbar tl">
@@ -13,7 +14,7 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                         </div>
 
                         <div className="navLinks pl3">
-                            <a className="navLeft f5" id="water" href="http://localhost/Water-Project-1/waterlogged.html">{'Waterlogged Link'}</a>
+                            <a className="navLeft f5" id="water" href="https://medium.com/@danaxiom/the-complete-steps-to-becoming-the-legend-you-always-thought-you-were-924f880e92d4">{'Medium Link'}</a>
                         </div>
                             
                         <div className="navLinks pl3">
@@ -64,8 +65,8 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                             <p className="navLeft f4" id="fidi" onClick={() => onRouteChange('home')} >{'Dan and Fidi'}</p>
                         </div>
 
-                        <div className="navLinks pl3">
-                            <a className="navLeft f5" id="water" href="http://localhost/Water-Project-1/waterlogged.html">{'Waterlogged Link'}</a>
+                        <div className="navLinks pl3">                         
+                            <a className="navLeft f5" id="water" href="https://medium.com/@danaxiom/the-complete-steps-to-becoming-the-legend-you-always-thought-you-were-924f880e92d4">{'Medium Link'}</a>
                         </div>
                             
                         <div className="navLinks pl3">

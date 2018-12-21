@@ -81,10 +81,11 @@ class App extends Component {
     }
     
     showIconPhoto = (iconNumber) => {
-        //console.log("test");
+        this.setState({isMemeOn:false});
+        this.setState({imageUrl:iconNumber});
     }
-
-   onButtonSubmit = () => {
+        
+    onButtonSubmit = () => {
        if (this.state.user.email === '') {
         this.setState({isMemeOn:false});
        } else {
@@ -108,16 +109,18 @@ class App extends Component {
         })
        }
     }
-   
+      
    onButtonSearch = () => {
-       fetch('https://salty-oasis-94587.herokuapp.com/addImage', {
+       fetch('https://salty-oasis-94587.herokuapp.com/searchPhotos', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({
-                search : this.state.search,
+                name : this.state.search,
+                place : this.state.search,
                 email: this.state.user.email,
             })
         })
+        .then(response => response.json())
         .then(picture => {
             console.log("Photo found successfully");
         }).catch(err => {
@@ -157,8 +160,8 @@ class App extends Component {
                 imageUrl={imageUrl}
                 email={email}
                 showIconPhoto={this.showIconPhoto}
+                isMemeOn={isMemeOn}
             />
-            </ErrorBoundary>
             <Meme
                 turnMemeOn={this.turnMemeOn}
                 deleteImageUrl={this.deleteImageUrl}
@@ -170,6 +173,7 @@ class App extends Component {
                 submitWithoutEmail={submitWithoutEmail}
                 fetchData={this.fetchData}
             />
+            </ErrorBoundary>
             </div>
         : (
         route === 'signIn'
