@@ -18,13 +18,15 @@ const initialState = {
             imageUrl:'',
             route:'home',
             isSignedIn:false,
+            submitWithoutEmail: false,
             isMemeOn:true,
             user: {
                 id: 0,
                 username: '',
                 email: '',
                 entries: [],
-                joined: ''
+                joined: '',
+                uploadedPic: ''
             }
 }
 
@@ -34,6 +36,7 @@ class App extends Component {
         this.state = {
             menu: false,
             input:'http://placekitten.com/g/600/300',
+            search: '',
             imageUrl:'',
             route:'home',
             isSignedIn:false,
@@ -61,16 +64,6 @@ class App extends Component {
         this.setState({submitWithoutEmail:true})
     }
     
-    componentDidMount() {
-        fetch('http://localhost:3000')
-        .then(response => response.json())
-        .then(console.log)
-    }
-
-    fetchData() {
-        
-    }
-    
     turnMemeOn = () => {
         this.setState({isMemeOn:true})
     }
@@ -87,6 +80,10 @@ class App extends Component {
         this.setState({search: event.target.value});
     }
     
+    showIconPhoto = (iconNumber) => {
+        //console.log("test");
+    }
+
    onButtonSubmit = () => {
        if (this.state.user.email === '') {
         this.setState({isMemeOn:false});
@@ -94,7 +91,7 @@ class App extends Component {
         this.setState({isMemeOn:false});
         this.state.input.trim();
         this.setState({imageUrl: this.state.input});
-        const final = this.state.imageUrl.slice(30,50);
+        const final = "Autoname" + (this.state.imageUrl.slice(0,20));
         fetch('https://salty-oasis-94587.herokuapp.com/addImage', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
@@ -159,6 +156,7 @@ class App extends Component {
                 entries={entries}
                 imageUrl={imageUrl}
                 email={email}
+                showIconPhoto={this.showIconPhoto}
             />
             </ErrorBoundary>
             <Meme
