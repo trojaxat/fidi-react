@@ -5,16 +5,17 @@ class Icons extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            load: false,
             email: this.props.email,
             icons: '',
             iconNumbers: [0,1,2,3,4],
             totalUploaded: '',
-            uploaded1: '',
-            uploaded2: '',
-            uploaded3: '',
-            uploaded4: '',
-            uploaded5: '',
-            name1: "Please register or sign in to add/remove photos",
+            uploaded1: this.props.icons[0].link,
+            uploaded2: this.props.icons[1].link,
+            uploaded3: this.props.icons[2].link,
+            uploaded4: this.props.icons[3].link,
+            uploaded5: this.props.icons[4].link,
+            name1: "Please add photos, via the Upload Box",
             name2: "Photo 1",
             name3: "Photo 2",
             name4: "Photo 3",
@@ -26,14 +27,20 @@ class Icons extends React.Component {
         this.setState({uploaded1: 'http://placekitten.com/g/600/300'});
         this.setState({name1: 'Please add links to see your photos'});
     }
+            
+    static getDerivedStateFromProps(props, current_state) {
+        if (current_state.submitWithoutEmail !== props.submitWithoutEmail) {
+            return {
+                load: true
+            }
+        } else {
+            return null
+        }
+    }
     
     componentDidUpdate(nextProps, nextState) {
-      if (this.props.imageUrl !== nextProps.imageUrl) {
-            this.onClickLast(-5);
-      }
-      if (this.props.submitWithoutEmail !== nextProps.submitWithoutEmail) {
-            this.onClickLast(-5);
-      }
+      if (this.state.load === false) {
+      }     
     }
     
     changeIconValuesByX = (x) => {

@@ -12,11 +12,18 @@ import 'tachyons';
 import './App.css';
 
 const initialState = {
+            icons: [
+                {link:'http://placekitten.com/g/600/300'},
+                {link:'http://placekitten.com/408/287'},
+                {link:'https://placebear.com/200/300'},
+                {link:'https://placekitten.com/200/138'},
+                {link:'https://placekitten.com/200/286'}
+            ],
             menu: false,
             input:'',
             search: '',
             imageUrl:'',
-            route:'home',
+            route:'signIn',
             isSignedIn:false,
             submitWithoutEmail: false,
             isMemeOn:true,
@@ -34,11 +41,18 @@ class App extends Component {
     constructor(){
         super();
         this.state = {
+            icons: [
+                {link:'http://placekitten.com/g/600/300'},
+                {link:'http://placekitten.com/408/287'},
+                {link:'https://placebear.com/200/300'},
+                {link:'https://placekitten.com/200/138'},
+                {link:'https://placekitten.com/200/286'}
+            ],
             menu: false,
             input:'http://placekitten.com/g/600/300',
             search: '',
             imageUrl:'',
-            route:'home',
+            route:'signIn',
             isSignedIn:false,
             submitWithoutEmail: false,
             isMemeOn:true,
@@ -52,7 +66,7 @@ class App extends Component {
             }
         }
     }
-
+        
     loadUser = (data) => {
         this.setState( {user: {
             id: data.id,
@@ -62,6 +76,12 @@ class App extends Component {
             date: data.joined
         }})
         this.setState({submitWithoutEmail:true})
+    }
+    
+    // change this to component mount, so it loads when its up, shows undefined when its slow
+    loadPhotos = (links) => {
+        console.log('links', this.state.links);
+        this.setState({icons:links});
     }
     
     turnMemeOn = () => {
@@ -138,7 +158,7 @@ class App extends Component {
    }
 
   render() {
-      const { menu, imageUrl, route, isSignedIn, input, isMemeOn, submitWithoutEmail } = this.state;
+      const { menu, imageUrl, route, isSignedIn, input, isMemeOn, submitWithoutEmail, icons } = this.state;
       const { entries, username, email, uploadedPic } = this.state.user;
     return (
       <div className="App">
@@ -161,6 +181,8 @@ class App extends Component {
                 email={email}
                 showIconPhoto={this.showIconPhoto}
                 isMemeOn={isMemeOn}
+                submitWithoutEmail={submitWithoutEmail}
+                icons={icons}
             />
             <Meme
                 turnMemeOn={this.turnMemeOn}
@@ -171,16 +193,20 @@ class App extends Component {
                 input={input}
                 email={email}
                 submitWithoutEmail={submitWithoutEmail}
-                fetchData={this.fetchData}
             />
             </ErrorBoundary>
             </div>
         : (
         route === 'signIn'
-            ? <SignIn  loadUser={this.loadUser}
-            onRouteChange={this.onRouteChange}/>
-            : <Register loadUser={this.loadUser} 
-            onRouteChange={this.onRouteChange}/>
+            ? <SignIn  
+                loadUser={this.loadUser}
+                onRouteChange={this.onRouteChange}
+                loadPhotos={this.loadPhotos}
+                />
+            : <Register 
+                loadUser={this.loadUser} 
+                onRouteChange={this.onRouteChange}
+                />
             )
         }
       </div>
