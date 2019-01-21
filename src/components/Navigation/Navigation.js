@@ -10,7 +10,7 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                     <div className="links">
                     <ul>
                         <div className="navLinks pl0">
-                            <p className="navLeft f4" id="fidi" onClick={() => onRouteChange('home')} >{'Dan and Fidi'}</p>
+                            <p className="navLeft f4" id="fidi" onClick={() => onRouteChange('home')} >{'Home'}</p>
                         </div>
 
                         <div className="navLinks pl3">
@@ -62,7 +62,7 @@ const Navigation = ({ onRouteChange, onInputChange, onButtonSubmit, isSignedIn, 
                     <div className="links">
                     <ul>
                         <div className="navLinks pl0">
-                            <p className="navLeft f4" id="fidi" onClick={() => onRouteChange('home')} >{'Dan and Fidi'}</p>
+                            <p className="navLeft f4" id="fidi" onClick={() => onRouteChange('home')} >{'Home'}</p>
                         </div>
 
                         <div className="navLinks pl3">                         
