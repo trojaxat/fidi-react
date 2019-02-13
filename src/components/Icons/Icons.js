@@ -104,6 +104,7 @@ class Icons extends React.Component {
     
     
     loadNumberOfImages = (links, difference) => {
+        // improve this
             if (typeof(links[4]) !== 'undefined') {
                 this.setState({uploaded1: links[this.state.iconNumbers[0]].link});
                 this.setState({name1: links[this.state.iconNumbers[0]].place});

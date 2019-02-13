@@ -7,6 +7,7 @@ import Meme from '../components/Images/Meme';
 import Register from '../components/Register/Register';
 import SignIn from '../components/SignIn/SignIn';
 import Icons from '../components/Icons/Icons';
+import Comments from '../components/Comments/Comments';
 
 import 'tachyons';
 import './App.css';
@@ -56,6 +57,7 @@ class App extends Component {
             isSignedIn:false,
             submitWithoutEmail: false,
             isMemeOn:true,
+            commentScore: 0,
             user: {
                 id: 0,
                 username: '',
@@ -104,7 +106,7 @@ class App extends Component {
         this.setState({isMemeOn:false});
         this.setState({imageUrl:iconNumber});
     }
-        
+    
     onButtonSubmit = () => {
        if (this.state.user.email === '') {
         this.setState({isMemeOn:false});
@@ -131,7 +133,7 @@ class App extends Component {
     }
       
    onButtonSearch = () => {
-       fetch('https://salty-oasis-94587.herokuapp.com/searchPhotos', {
+       fetch('https://salty-oasis-94587.herokuapp.com/getImage', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({
@@ -193,6 +195,8 @@ class App extends Component {
                 input={input}
                 email={email}
                 submitWithoutEmail={submitWithoutEmail}
+            />
+            <Comments
             />
             </ErrorBoundary>
             </div>

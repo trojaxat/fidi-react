@@ -21,6 +21,7 @@ class Meme extends React.Component {
                 link: '',
                 place: '',
                 name: '',
+                score: 3,
             }
         }
     this.showMenu = this.showMenu.bind(this);
@@ -108,6 +109,11 @@ class Meme extends React.Component {
         })
     } 
     
+    onScoreIncrease = () => {
+        // add backend for score increase 
+        this.setState({uploadedPhoto: {score: this.state.uploadedPhoto.score + 1}})
+    }
+    
     // can be put to backend to hide API key etc
     async fetchMeme(){
         this.setState({memeHome:this.state.memeLoading}) 
@@ -161,7 +167,10 @@ class Meme extends React.Component {
                     <div className="bg-white pa2 ph3-ns pb3-ns br2">
                         <h4 className="text bg-light pa2 br2" id='memeText' onClick={this.props.turnMemeOn}>{"Please click here or the meme to load more."} </h4>
                         <h1 className="f5 f4-ns mv0">{this.state.uploadedPhoto.name} {this.state.uploadedPhoto.place}</h1>
+                        <div className="LinkScore">
                         <h1 id="memeText" className="f5 f4-ns mv0" onClick={this.showLink}> Link  </h1>
+                        <h1 id="memeScore" className="f5 f4-ns mv0" onClick={this.onScoreIncrease}> Score {this.state.uploadedPhoto.score}</h1>
+                        </div>
                     </div> 
                 {
                 this.state.showMenu
