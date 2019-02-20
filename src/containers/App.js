@@ -58,6 +58,7 @@ class App extends Component {
             submitWithoutEmail: false,
             isMemeOn:true,
             commentScore: 0,
+            comment:'',
             user: {
                 id: 0,
                 username: '',
@@ -82,7 +83,6 @@ class App extends Component {
     
     // change this to component mount, so it loads when its up, shows undefined when its slow
     loadPhotos = (links) => {
-        console.log('links', this.state.links);
         this.setState({icons:links});
     }
     
@@ -144,6 +144,9 @@ class App extends Component {
         })
         .then(response => response.json())
         .then(picture => {
+            this.setState({isMemeOn:false});
+            let pic = picture.link;
+            this.setState({imageUrl: pic});
             console.log("Photo found successfully");
         }).catch(err => {
             console.log('Photo not found'); 
@@ -161,7 +164,7 @@ class App extends Component {
 
   render() {
       const { menu, imageUrl, route, isSignedIn, input, isMemeOn, submitWithoutEmail, icons } = this.state;
-      const { entries, username, email, uploadedPic } = this.state.user;
+      const { entries, username, email, uploadedPic, id } = this.state.user;
     return (
       <div className="App">
         <Navigation 
@@ -177,6 +180,7 @@ class App extends Component {
         ?   <div>
             <ErrorBoundary>
             <Icons
+                loadPhotos={this.loadPhotos}
                 username={username} 
                 entries={entries}
                 imageUrl={imageUrl}
@@ -197,6 +201,11 @@ class App extends Component {
                 submitWithoutEmail={submitWithoutEmail}
             />
             <Comments
+                username={username} 
+                imageUrl={imageUrl}
+                email={email}
+                id={id}
+                isMemeOn={isMemeOn}
             />
             </ErrorBoundary>
             </div>

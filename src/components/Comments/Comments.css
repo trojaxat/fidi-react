@@ -1,7 +1,13 @@
 .Comments {
-    float:right;
-    display:inline-block;
-    position: fixed;
     z-index: -1;
-    overflow-y: auto;
+    background-color:white;
+}
+
+.CommentBox{
+    float:right;
+    position: relative;
+}
+
+.comment {
+    position:relative;
 }
