@@ -6,7 +6,7 @@ class Comments extends React.Component {
         super(props);
         this.state = {
             name: "SexyCat",
-            Comments: [{"comment":"hell yeah","id":"cat","score":2}, {"comment":"i love cat","id":"cat", "score":5}, {"comment":"aww so cute","id":"cat","score":8}],
+            comments: [{"comment":"hell yeah","id":"cat","score":2}, {"comment":"i love cat","id":"cat", "score":5}, {"comment":"aww so cute","id":"cat","score":8}],
             commentsShowing: 0,
             commentScore: 0,
             comment: '',
@@ -26,16 +26,13 @@ class Comments extends React.Component {
         .then(response => response.json())
         .then(user => {
             console.log("hi");
-        }).catch(err => console.log('Comments not found'))
+        }).catch(err => {
+            console.log('Comments not found');
+        })
     }
     
     onCommentSubmit = () => {
-        console.log(this.state.comment);
-        console.log(this.props.imageUrl);
-        console.log(this.props.email);
-        console.log(this.state.id);
-
-        fetch('https://salty-oasis-94587.herokuapp.com/getImageById', {
+        fetch('https://salty-oasis-94587.herokuapp.com/getImageByLink', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({
@@ -46,28 +43,39 @@ class Comments extends React.Component {
         .then(response => response.json())
         .then(id => {
             this.setState({id: id.id});
-            console.log('id', id);
+            this.sendComment();
+        }).catch(err => {
+            console.log('Id not found'); 
+        })
+    }
+    
+    sendComment = () => {
+            let toBeTrimmed = this.state.comment;
+            let trimmedComment = toBeTrimmed.trim();
             fetch('https://salty-oasis-94587.herokuapp.com/addComment', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({
-                comment: this.state.comment,
+                comment: trimmedComment,
                 link : this.props.imageUrl,
                 email: this.props.email,
                 id: this.state.id
                 })
             })
+            .then(response => response.json())
             .then(picture => {
+            let newComment = {
+                    comment: picture.comment,
+                    id: picture.id,
+                    score: 0
+                }
+            this.state.comments.push(newComment);
+            this.setState({commentsShowing: this.state.comments.length});
                 console.log("Comment added successfully");
             }).catch(err => {
                 console.log('Comment not added'); 
             })
-        }).catch(err => {
-            console.log('Id not found'); 
-        })
-        
-        
-    }
+        }
     
     commentChange = (x) => {
         this.setState({commentScore: this.state.commentScore + x});
@@ -86,9 +94,9 @@ class Comments extends React.Component {
     render() {
         const commentsBar = [];
         
-        for (var i = 0; i < this.state.Comments.length; i++) {
+        for (var i = 0; i < this.state.comments.length; i++) {
             commentsBar.push(<div className='comment' key={i}>
-                            {this.state.Comments[i].comment} 
+                            {this.state.comments[i].comment} 
                              </div>);
         }
         
@@ -113,6 +121,7 @@ class Comments extends React.Component {
                     > {'Add Comment'} </button>
                 </div>
                 );
+
         }
     }
 }
