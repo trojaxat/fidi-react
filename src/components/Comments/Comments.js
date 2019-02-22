@@ -95,22 +95,22 @@ class Comments extends React.Component {
         const commentsBar = [];
         
         for (var i = 0; i < this.state.comments.length; i++) {
-            commentsBar.push(<div className='comment' key={i}>
+            commentsBar.push(<div className='comment pa1 bb b--black-10' key={i}>
                             {this.state.comments[i].comment} 
                              </div>);
         }
         
       if (this.props.isMemeOn) {
         return (
-                    <div className="CommentBox bg-light-purple br2 ma2 pa2">
+                    <div className="Comments bg-light-purple br2 ma2 pa2">
                     Comments Section
                     </div>
                 );
         } else {
             return (  
-                <div className="CommentBox bg-light-purple br2 ma2 pa2">
+                <div className="Comments bg-light-purple br2 ma2 pa2">
                     {this.state.name}
-                    <div className="Comments br2">
+                    <div className="CommentBox br2">
                         {commentsBar}         
                     </div>
                 <input className='CommentInput br2 pa1' placeholder={'Add comment here...'} type='text' onChange={this.onCommentChange}/>

@@ -166,7 +166,7 @@ class Icons extends React.Component {
     render() {
     if (this.state.uploaded1 === '') {
     return (
-            <div className='sidebar'>
+            <div className='Icons br2'>
                 <div className='title'> 
                     {this.props.username} Uploaded photos: {this.state.totalUploaded} </div>
                     <div className="buttons">
@@ -191,7 +191,7 @@ class Icons extends React.Component {
         );
     } else {
             return (
-            <div className='sidebar br2'>
+            <div className='Icons br2'>
                 <div className='title'> 
                 {this.props.username} uploaded photos: {this.state.totalUploaded} </div>
                     <div className="buttons">

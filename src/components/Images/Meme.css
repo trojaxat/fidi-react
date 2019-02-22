@@ -1,19 +1,19 @@
 .Tilt {
-    width: 600px;
-    height: auto;
     z-index: 0;
 }
 
-.text{
-    display: inline-table;
+.Image{
 }
 
 .Uploaded {
-    width: 600px;
-    height: auto;
+    height: 60vh;
     z-index: 0;
-    
     position:center;
+}
+
+.MemeInfo {
+    display:flex;
+    flex-direction: row;
 }
 
 #memeText, memeScore {

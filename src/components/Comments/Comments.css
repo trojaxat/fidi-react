@@ -1,13 +1,9 @@
-.Comments {
+.CommentBox{
     z-index: -1;
     background-color:white;
 }
 
-.CommentBox{
-    float:right;
-    position: relative;
-}
-
 .comment {
     position:relative;
+    text-align: left;
 }

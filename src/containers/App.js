@@ -105,8 +105,27 @@ class App extends Component {
     showIconPhoto = (iconNumber) => {
         this.setState({isMemeOn:false});
         this.setState({imageUrl:iconNumber});
+        this.getComments(iconNumber);
     }
     
+   getComments = (iconNumber) => {
+       // get comments not finished
+        fetch('https://salty-oasis-94587.herokuapp.com/getComments', {
+        method: 'post',
+        headers: {'Content-Type' : 'application/json'},
+        body: JSON.stringify({
+            link : iconNumber,
+            })
+        })
+        .then(response => response.json())
+        .then(comments => {
+            console.log('comments', comments);
+            console.log("Comment found successfully");
+        }).catch(err => {
+            console.log('Comments not found'); 
+        })
+    }
+       
     onButtonSubmit = () => {
        if (this.state.user.email === '') {
         this.setState({isMemeOn:false});
@@ -177,7 +196,7 @@ class App extends Component {
             showPhotoMenu={menu}
         />
         { route === 'home'
-        ?   <div>
+        ?   <main>
             <ErrorBoundary>
             <Icons
                 loadPhotos={this.loadPhotos}
@@ -208,7 +227,7 @@ class App extends Component {
                 isMemeOn={isMemeOn}
             />
             </ErrorBoundary>
-            </div>
+            </main>
         : (
         route === 'signIn'
             ? <SignIn  
