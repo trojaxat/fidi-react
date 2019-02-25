@@ -172,15 +172,15 @@ class Icons extends React.Component {
                     <div className="buttons">
                     <button 
                         type="button" 
-                        className="btn black btn-primary btn-sm"
+                        className="btnLeft black btn-primary btn-sm"
                         onClick={this.onClickLast}
-                    > {`❮ Previous`} </button>
+                    > {`❮ Previous `} </button>
         
                     <button 
                         type="button"   
-                        className="btn black btn-primary btn-sm"
+                        className="btnRight black btn-primary btn-sm"
                         onClick={this.onClickNext}
-                    > {`Next ❯`} </button>
+                    > {` Next ❯`} </button>
         
                     </div>
                 <div className="div images">

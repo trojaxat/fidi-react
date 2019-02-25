@@ -6,9 +6,9 @@ class Comments extends React.Component {
         super(props);
         this.state = {
             name: "SexyCat",
-            comments: [{"comment":"hell yeah","id":"cat","score":2}, {"comment":"i love cat","id":"cat", "score":5}, {"comment":"aww so cute","id":"cat","score":8}],
             commentsShowing: 0,
             commentScore: 0,
+            comments: [],
             comment: '',
             id: '',
         }
@@ -65,12 +65,13 @@ class Comments extends React.Component {
             .then(response => response.json())
             .then(picture => {
             let newComment = {
+                    email: this.props.email,
                     comment: picture.comment,
                     id: picture.id,
                     score: 0
                 }
-            this.state.comments.push(newComment);
-            this.setState({commentsShowing: this.state.comments.length});
+                this.setState({comments: newComment});
+                this.props.pushComments(newComment);
                 console.log("Comment added successfully");
             }).catch(err => {
                 console.log('Comment not added'); 
@@ -80,9 +81,16 @@ class Comments extends React.Component {
     commentChange = (x) => {
         this.setState({commentScore: this.state.commentScore + x});
     }
+        
+    commentsShowing = (x) => {
+        this.setState({commentsShowing: this.state.commentsShowing + x});
+    }
     
-    showMoreComments = () => {
-        this.setState({commentsShowing: this.state.commentsShowing + 5});
+    commentsShowingUp = () => {
+        this.commentsShowing(10);
+    }
+    commentsShowingDown = () => {
+        this.commentsShowing(-10);
     }
     
     onCommentChange = (event) => {
@@ -94,9 +102,9 @@ class Comments extends React.Component {
     render() {
         const commentsBar = [];
         
-        for (var i = 0; i < this.state.comments.length; i++) {
+        for (var i = 0; i < this.props.comments.length; i++) {
             commentsBar.push(<div className='comment pa1 bb b--black-10' key={i}>
-                            {this.state.comments[i].comment} 
+                             {this.props.comments[i].email} : {this.props.comments[i].comment} 
                              </div>);
         }
         
@@ -108,8 +116,20 @@ class Comments extends React.Component {
                 );
         } else {
             return (  
-                <div className="Comments bg-light-purple br2 ma2 pa2">
+                <div className="Comments bg-light-purple br2 ma2 pa2"> 
+                    <button 
+                        type="button" 
+                        className="btn black btn-primary btn-sm"
+                        onClick={this.commentsShowingDown}
+                    > {`❮ Previous`} </button>
+                    
                     {this.state.name}
+                
+                    <button 
+                        type="button"   
+                        className="btn black btn-primary btn-sm"
+                        onClick={this.commentsShowingUp}
+                    > {` Next ❯`} </button>
                     <div className="CommentBox br2">
                         {commentsBar}         
                     </div>

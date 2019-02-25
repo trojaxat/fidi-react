@@ -24,10 +24,14 @@ const initialState = {
             input:'',
             search: '',
             imageUrl:'',
+            id: 0,
             route:'signIn',
             isSignedIn:false,
             submitWithoutEmail: false,
             isMemeOn:true,
+            commentScore: 0,
+            comment:'',
+            comments:[{"comment":"hell yeah","id":"cat","score":2, username:"phil"}, {"comment":"i love cat","id":"cat", "score":5,username:"devin"}, {"comment":"aww so cute","id":"cat","score":8,username:"dr dre"}],
             user: {
                 id: 0,
                 username: '',
@@ -53,12 +57,14 @@ class App extends Component {
             input:'http://placekitten.com/g/600/300',
             search: '',
             imageUrl:'',
+            id: 0,
             route:'signIn',
             isSignedIn:false,
             submitWithoutEmail: false,
             isMemeOn:true,
             commentScore: 0,
             comment:'',
+            comments:[{"comment":"hell yeah","id":"cat","score":2, username:"phil", email:"phil@gmail.com"}, {"comment":"i love cat","id":"cat", "score":5,username:"devin", email:"devin@gmail.com"}, {"comment":"aww so cute","id":"cat","score":8,username:"dr dre", email:"dre@gmail.com"}],
             user: {
                 id: 0,
                 username: '',
@@ -108,23 +114,42 @@ class App extends Component {
         this.getComments(iconNumber);
     }
     
-   getComments = (iconNumber) => {
-       // get comments not finished
-        fetch('https://salty-oasis-94587.herokuapp.com/getComments', {
-        method: 'post',
-        headers: {'Content-Type' : 'application/json'},
-        body: JSON.stringify({
-            link : iconNumber,
+    pushComments = (newComment) => {
+        this.state.comments.push(newComment);
+        this.setState({comments: this.state.comments})
+    }
+    
+    getComments = (iconNumber) => {
+        fetch('https://salty-oasis-94587.herokuapp.com/getImageByLink', {
+            method: 'post',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                link : iconNumber,
+                email: this.state.user.email,
             })
         })
         .then(response => response.json())
-        .then(comments => {
-            console.log('comments', comments);
-            console.log("Comment found successfully");
-        }).catch(err => {
-            console.log('Comments not found'); 
-        })
-    }
+        .then(id => {
+            this.setState({id: id.id});
+            fetch('https://salty-oasis-94587.herokuapp.com/getComments', {
+                method: 'post',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify({
+                    link : iconNumber,
+                    id: this.state.id,
+                    })
+                })
+                .then(response => response.json())
+                .then(comments => {
+                    this.setState({comments:comments});
+                    console.log("Comment found successfully");
+                }).catch(err => {
+                    console.log('Comments not found'); 
+                })
+            }).catch(err => {
+                console.log('Id not found'); 
+            })
+        }
        
     onButtonSubmit = () => {
        if (this.state.user.email === '') {
@@ -182,7 +207,7 @@ class App extends Component {
    }
 
   render() {
-      const { menu, imageUrl, route, isSignedIn, input, isMemeOn, submitWithoutEmail, icons } = this.state;
+      const { menu, imageUrl, route, isSignedIn, input, isMemeOn, submitWithoutEmail, icons, comments } = this.state;
       const { entries, username, email, uploadedPic, id } = this.state.user;
     return (
       <div className="App">
@@ -220,11 +245,13 @@ class App extends Component {
                 submitWithoutEmail={submitWithoutEmail}
             />
             <Comments
+                pushComments={this.pushComments}
                 username={username} 
                 imageUrl={imageUrl}
                 email={email}
                 id={id}
                 isMemeOn={isMemeOn}
+                comments={comments}
             />
             </ErrorBoundary>
             </main>
@@ -234,6 +261,7 @@ class App extends Component {
                 loadUser={this.loadUser}
                 onRouteChange={this.onRouteChange}
                 loadPhotos={this.loadPhotos}
+                email={email}
                 />
             : <Register 
                 loadUser={this.loadUser} 

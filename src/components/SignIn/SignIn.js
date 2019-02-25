@@ -33,14 +33,18 @@ class SignIn extends React.Component {
             if (user.email) {
                 this.props.loadUser(user);
                 this.props.onRouteChange('home');
+                this.onLoadUserIcons();
             }       
         })
         
+    }
+    
+    onLoadUserIcons = () => {
         fetch('https://salty-oasis-94587.herokuapp.com/loadUserIcons', {
             method: 'post',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify({
-                email : this.state.signInEmail,
+                email : this.props.email,
             })
         })
         .then(response => response.json())

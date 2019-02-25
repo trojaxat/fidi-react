@@ -7,3 +7,14 @@
     position:relative;
     text-align: left;
 }
+
+.btn {
+    display: contents;
+    position: fixed;
+    z-index: 2;
+}
+
+.btn:hover {
+    color:darkseagreen;
+}
+
