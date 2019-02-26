@@ -7,7 +7,6 @@ class SignIn extends React.Component {
         this.state = {
             signInEmail: '',
             signInPassword: '',
-            icons: ''
         }
     }
     
@@ -48,8 +47,7 @@ class SignIn extends React.Component {
         })
         .then(response => response.json())
         .then(links => {
-                this.setState({icons: links});
-                if (links.length > 4) {
+                if (links.length > 0) {
                     this.props.loadPhotos(links);
                 }
             }       

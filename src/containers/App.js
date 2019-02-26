@@ -20,6 +20,7 @@ const initialState = {
                 {link:'https://placekitten.com/200/138'},
                 {link:'https://placekitten.com/200/286'}
             ],
+            iconsloaded: false,
             menu: false,
             input:'',
             search: '',
@@ -31,7 +32,7 @@ const initialState = {
             isMemeOn:true,
             commentScore: 0,
             comment:'',
-            comments:[{"comment":"hell yeah","id":"cat","score":2, username:"phil"}, {"comment":"i love cat","id":"cat", "score":5,username:"devin"}, {"comment":"aww so cute","id":"cat","score":8,username:"dr dre"}],
+            comments:[],
             user: {
                 id: 0,
                 username: '',
@@ -47,12 +48,13 @@ class App extends Component {
         super();
         this.state = {
             icons: [
-                {link:'http://placekitten.com/g/600/300'},
-                {link:'http://placekitten.com/408/287'},
-                {link:'https://placebear.com/200/300'},
-                {link:'https://placekitten.com/200/138'},
-                {link:'https://placekitten.com/200/286'}
+                {link:'http://placekitten.com/g/600/300', id:"Some example photos"},
+                {link:'http://placekitten.com/408/287', id:"Please upload or search for more"},
+                {link:'https://placebear.com/200/300', id:"You can scroll to see your uploads"},
+                {link:'https://placekitten.com/200/138', id:"By clicking on your photos, you can add comments and hashtags"},
+                {link:'https://placekitten.com/200/286',}
             ],
+            iconsloaded: false,
             menu: false,
             input:'http://placekitten.com/g/600/300',
             search: '',
@@ -64,7 +66,7 @@ class App extends Component {
             isMemeOn:true,
             commentScore: 0,
             comment:'',
-            comments:[{"comment":"hell yeah","id":"cat","score":2, username:"phil", email:"phil@gmail.com"}, {"comment":"i love cat","id":"cat", "score":5,username:"devin", email:"devin@gmail.com"}, {"comment":"aww so cute","id":"cat","score":8,username:"dr dre", email:"dre@gmail.com"}],
+            comments:[],
             user: {
                 id: 0,
                 username: '',
@@ -90,6 +92,7 @@ class App extends Component {
     // change this to component mount, so it loads when its up, shows undefined when its slow
     loadPhotos = (links) => {
         this.setState({icons:links});
+        this.setState({iconsloaded: true});
     }
     
     turnMemeOn = () => {
@@ -108,10 +111,10 @@ class App extends Component {
         this.setState({search: event.target.value});
     }
     
-    showIconPhoto = (iconNumber) => {
+    showIconPhoto = (i) => {
         this.setState({isMemeOn:false});
-        this.setState({imageUrl:iconNumber});
-        this.getComments(iconNumber);
+        this.setState({imageUrl: i});
+        this.getComments(i);
     }
     
     pushComments = (newComment) => {
@@ -142,7 +145,7 @@ class App extends Component {
                 .then(response => response.json())
                 .then(comments => {
                     this.setState({comments:comments});
-                    console.log("Comment found successfully");
+                    console.log("Comments found successfully");
                 }).catch(err => {
                     console.log('Comments not found'); 
                 })
