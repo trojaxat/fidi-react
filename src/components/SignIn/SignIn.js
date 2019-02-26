@@ -33,10 +33,9 @@ class SignIn extends React.Component {
             if (user.email) {
                 this.props.loadUser(user);
                 this.props.onRouteChange('home');
-                this.onLoadUserIcons();
+                this.onLoadUserIcons(user.email);
             }       
         })
-        
     }
     
     onLoadUserIcons = () => {

@@ -87,10 +87,18 @@ class Comments extends React.Component {
     }
     
     commentsShowingUp = () => {
-        this.commentsShowing(10);
+        if (this.state.commentsShowing + 10 >= this.props.comments.length){
+            this.commentsShowing(0);
+        } else {
+            this.commentsShowing(10);
+        }
     }
     commentsShowingDown = () => {
-        this.commentsShowing(-10);
+        if (this.state.commentsShowing <= 0){
+            this.commentsShowing(0);
+        } else {
+            this.commentsShowing(-10);
+        }
     }
     
     onCommentChange = (event) => {
@@ -107,6 +115,8 @@ class Comments extends React.Component {
                              {this.props.comments[i].email} : {this.props.comments[i].comment} 
                              </div>);
         }
+    
+        const commentsLimited = commentsBar.slice(this.state.commentsShowing, this.state.commentsShowing + 10);
         
       if (this.props.isMemeOn) {
         return (
@@ -117,21 +127,20 @@ class Comments extends React.Component {
         } else {
             return (  
                 <div className="Comments bg-light-purple br2 ma2 pa2"> 
+                    <h5> {this.state.name} </h5>
                     <button 
                         type="button" 
                         className="btn black btn-primary btn-sm"
                         onClick={this.commentsShowingDown}
                     > {`❮ Previous`} </button>
                     
-                    {this.state.name}
-                
                     <button 
                         type="button"   
                         className="btn black btn-primary btn-sm"
                         onClick={this.commentsShowingUp}
                     > {` Next ❯`} </button>
                     <div className="CommentBox br2">
-                        {commentsBar}         
+                        {commentsLimited}         
                     </div>
                 <input className='CommentInput br2 pa1' placeholder={'Add comment here...'} type='text' onChange={this.onCommentChange}/>
                     <button 
