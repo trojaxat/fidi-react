@@ -11,6 +11,7 @@ class Comments extends React.Component {
             comments: [],
             comment: '',
             id: '',
+            button: '',
         }
     }
     
@@ -76,6 +77,24 @@ class Comments extends React.Component {
             }).catch(err => {
                 console.log('Comment not added'); 
             })
+        }   
+    
+    increaseCommentScore = (x) => {
+//            fetch('https://salty-oasis-94587.herokuapp.com/upvote', {
+//            method: 'post',
+//            headers: {'Content-Type' : 'application/json'},
+//            body: JSON.stringify({
+//                score: 2,
+//                comment: this.props.imageUrl,
+//                id: this.state.id
+//                })
+//            })
+//            .then(response => response.json())
+//            .then(value => {
+//                console.log("+1 UpDoot");
+//            }).catch(err => {
+//                console.log('Upvote unsucessful'); 
+//            })
         }
     
     commentChange = (x) => {
@@ -105,17 +124,64 @@ class Comments extends React.Component {
         this.setState({comment: event.target.value});
     }
     
-//     <div className='plus' onClick={this.commentChange(1)}> + </div>
-//     <div className='minus' onClick={this.commentChange(-1)}> - </div>
+    upvote = (e) => {
+        let upvoteButtonPress = e.currentTarget.dataset.div_id.slice(0,6);
+        if (upvoteButtonPress === "upvote") {
+            console.log('upvote button pressed');
+            this.increaseCommentScore(e);
+        }
+    }    
+    
+    editComment = (e) => {
+        let editButtonPress = e.currentTarget.dataset.div_id.slice(0,4);
+        if (editButtonPress === "edit") {
+            console.log('editButtonPress', editButtonPress);
+//          this.editComment(e);
+        }
+    }
+    
     render() {
         const commentsBar = [];
         
         for (var i = 0; i < this.props.comments.length; i++) {
-            commentsBar.push(<div className='comment pa1 bb b--black-10' key={i}>
-                             {this.props.comments[i].email} : {this.props.comments[i].comment} 
+            commentsBar.push(<div className='commentContainer pa1 bb b--black-10' 
+                                data-div_id={this.props.comments[i].comment} 
+                                onClick={this.upvote} 
+                                key={i}
+                             >
+                                 <div className='comment'>
+                                        <div className="userComment">
+                                            {this.props.comments[i].email} : {this.props.comments[i].comment}
+                                        </div>
+                                 </div>
+                                 <div className="commentMenu">
+                                    
+                                    <div 
+                                        className='EditComment'
+                                        onClick={this.editComment}
+                                        data-div_id={`edit` + this.props.comments[i].comment}
+                                    >
+                                        <button
+                                            className="btn UpButton"
+                                        > {`Edit Comment`}
+                                        </button> 
+                                    </div>
+                             
+                                    <div 
+                                        className='Upvote pr4' 
+                                        onClick={this.upvote}
+                                        data-div_id={`upvote` + this.props.comments[i].comment}
+                                    >
+                                        <button 
+                                            className="btn UpButton"
+                                        > {`Upvote `} {this.props.comments[i].score} 
+                                        </button> 
+                                    </div>
+                                </div>
                              </div>);
-        }
-    
+             }
+
+        
         const commentsLimited = commentsBar.slice(this.state.commentsShowing, this.state.commentsShowing + 10);
         
       if (this.props.isMemeOn) {
@@ -139,9 +205,12 @@ class Comments extends React.Component {
                         className="btn black btn-primary btn-sm"
                         onClick={this.commentsShowingUp}
                     > {` Next ❯`} </button>
+                    
+                
                     <div className="CommentBox br2">
-                        {commentsLimited}         
+                        {commentsLimited}
                     </div>
+                
                 <input className='CommentInput br2 pa1' placeholder={'Add comment here...'} type='text' onChange={this.onCommentChange}/>
                     <button 
                         className='br2 grow link ph3 pv2 bg-light-blue' 

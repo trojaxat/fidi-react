@@ -1,20 +1,37 @@
 .CommentBox{
-    z-index: -1;
     background-color:white;
 }
 
-.comment {
-    position:relative;
+.commentMenu{
+    background-color:white;
+    display: flex; 
+    justify-content:space-between;
+}
+
+.Upvote {
+    background-image: url("favicon.ico");
+    background-repeat: no-repeat;
+    background-position: right;
+    font-size: small;
+}
+
+.Upvote:hover{
+    cursor:pointer;
+}
+
+.comment{
+}
+.commentContainer {
     text-align: left;
 }
 
 .btn {
-    display: contents;
-    position: fixed;
     z-index: 2;
+    font-size: small;
 }
 
 .btn:hover {
     color:darkseagreen;
 }
+
 
